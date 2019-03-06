@@ -66,10 +66,6 @@ task tagNewVersion() {
     dependsOn pushVersionTag
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.0'
-}
-
 test {
     include '**/When*'
     exclude '**/*$*'
@@ -77,8 +73,10 @@ test {
     exclude '**/samples/**'
     exclude '**/*Sample*'
     maxParallelForks = Runtime.runtime.availableProcessors()
+    maxHeapSize '512m'
+    forkEvery 100
+    jvmArgs '-Xmx256m'
 }
-
 
 configurations.all {
     resolutionStrategy {
